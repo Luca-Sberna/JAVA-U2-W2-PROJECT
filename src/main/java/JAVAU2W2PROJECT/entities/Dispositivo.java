@@ -2,6 +2,8 @@ package JAVAU2W2PROJECT.entities;
 
 import java.util.UUID;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import JAVAU2W2PROJECT.utils.StatoDispositivo;
 import JAVAU2W2PROJECT.utils.TipoDispositivo;
 import jakarta.persistence.Entity;
@@ -27,8 +29,8 @@ public class Dispositivo {
 	private TipoDispositivo tipoDispositivo;
 	@Enumerated(EnumType.STRING)
 	private StatoDispositivo statoDispositivo;
-
 	@ManyToOne
+	@JsonIgnore
 	private User user;
 
 	public Dispositivo(String marca, TipoDispositivo tipoDispositivo, StatoDispositivo statoDispositivo) {
