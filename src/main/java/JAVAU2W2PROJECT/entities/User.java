@@ -27,6 +27,7 @@ public class User implements UserDetails {
 	@Id
 	@GeneratedValue
 	private UUID id;
+	private String username;
 	private String name;
 	private String surname;
 	private String email;
@@ -37,8 +38,9 @@ public class User implements UserDetails {
 	@OneToMany(mappedBy = "user")
 	private List<Dispositivo> dispositivi;
 
-	public User(String name, String surname, String email, String password) {
+	public User(String username, String name, String surname, String email, String password) {
 		super();
+		this.username = username;
 		this.name = name;
 		this.surname = surname;
 		this.email = email;

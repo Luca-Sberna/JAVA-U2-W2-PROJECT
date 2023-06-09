@@ -13,11 +13,15 @@ import org.springframework.stereotype.Service;
 import JAVAU2W2PROJECT.entities.Dispositivo;
 import JAVAU2W2PROJECT.payloads.DispositivoRegistrationPayload;
 import JAVAU2W2PROJECT.repository.DispositiviRepository;
+import JAVAU2W2PROJECT.repository.UsersRepository;
 
 @Service
 public class DispositiviService {
 	@Autowired
 	private DispositiviRepository dr;
+
+	@Autowired
+	UsersRepository ur;
 
 	public Dispositivo create(DispositivoRegistrationPayload d) {
 		Dispositivo nuovoDispositivo = new Dispositivo(d.getMarca(), d.getTipoDispositivo(), d.getStatoDispositivo());
@@ -37,7 +41,6 @@ public class DispositiviService {
 		found.setMarca(body.getMarca());
 		found.setStatoDispositivo(body.getStatoDispositivo());
 		found.setTipoDispositivo(body.getTipoDispositivo());
-		found.setUser(body.getUser());
 		return dr.save(found);
 
 	}
@@ -63,4 +66,5 @@ public class DispositiviService {
 	public Dispositivo saveDispositivo(DispositivoRegistrationPayload body) {
 		return saveDispositivo(body);
 	}
+
 }

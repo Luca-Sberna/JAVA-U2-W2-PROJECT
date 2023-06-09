@@ -10,21 +10,25 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import JAVAU2W2PROJECT.entities.Dispositivo;
 import JAVAU2W2PROJECT.entities.User;
 import JAVAU2W2PROJECT.exceptions.BadRequestException;
 import JAVAU2W2PROJECT.payloads.UserRegistrationPayload;
+import JAVAU2W2PROJECT.repository.DispositiviRepository;
 import JAVAU2W2PROJECT.repository.UsersRepository;
 
 @Service
 public class UsersService {
 	@Autowired
 	private UsersRepository usersRepo;
+	@Autowired
+	private DispositiviRepository dispositiviRepo;
 
 	public User create(UserRegistrationPayload u) {
 		usersRepo.findByEmail(u.getEmail()).ifPresent(user -> {
 			throw new BadRequestException("Email " + user.getEmail() + " already in use!");
 		});
-		User newUser = new User(u.getName(), u.getSurname(), u.getEmail(), u.getPassword());
+		User newUser = new User(u.getUsername(), u.getName(), u.getSurname(), u.getEmail(), u.getPassword());
 		return usersRepo.save(newUser);
 	}
 
@@ -50,6 +54,7 @@ public class UsersService {
 		User found = this.findById(id);
 
 		found.setId(id);
+		found.setUsername(u.getUsername());
 		found.setName(u.getName());
 		found.setSurname(u.getSurname());
 		found.setEmail(u.getEmail());
@@ -57,9 +62,25 @@ public class UsersService {
 		return usersRepo.save(found);
 	}
 
+	public User findByIdAndUpdatePassword(UUID id, UserRegistrationPayload u) throws NotFoundException {
+		User found = this.findById(id);
+		found.setPassword(u.getPassword());
+
+		return usersRepo.save(found);
+	}
+
 	public void findByIdAndDelete(UUID id) throws NotFoundException {
 		User found = this.findById(id);
 		usersRepo.delete(found);
+	}
+
+	public Dispositivo assignDeviceToUser(UUID dispositivoId, UUID userId) throws NotFoundException {
+		Dispositivo dispositivo = dispositiviRepo.findById(dispositivoId).orElseThrow(() -> new NotFoundException());
+		User user = usersRepo.findById(userId).orElseThrow(() -> new NotFoundException());
+
+		dispositivo.setUser(user);
+
+		return dispositiviRepo.save(dispositivo);
 	}
 
 }
