@@ -9,6 +9,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,7 +33,7 @@ public class DispositiviController {
 		return ds.find(page, size, sortBy);
 	}
 
-	@GetMapping("")
+	@PostMapping("")
 	@ResponseStatus(HttpStatus.CREATED)
 	public Dispositivo saveDispositivo(@RequestBody @Validated DispositivoRegistrationPayload body) {
 		return ds.create(body);
@@ -51,7 +52,7 @@ public class DispositiviController {
 
 	@DeleteMapping("/{dispositivoId}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
-	public void deleteUser(@PathVariable UUID dispositivoId) throws Exception {
+	public void deleteDispositivo(@PathVariable UUID dispositivoId) throws Exception {
 		ds.findByIdAndDelete(dispositivoId);
 	}
 
