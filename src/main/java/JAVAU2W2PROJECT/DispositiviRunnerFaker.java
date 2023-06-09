@@ -53,6 +53,9 @@ public class DispositiviRunnerFaker implements CommandLineRunner {
 
 		}
 
+		// logica per la corretta assegnazione di uno stato ad un dispositivo assegnato
+		// ad un utente
+
 		List<Dispositivo> dispositivi = dr.findAll();
 		Random random = new Random();
 		for (Dispositivo dispositivo : dispositivi) {
