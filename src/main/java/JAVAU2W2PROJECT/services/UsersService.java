@@ -74,7 +74,7 @@ public class UsersService {
 		usersRepo.delete(found);
 	}
 
-	public Dispositivo assignDeviceToUser(UUID dispositivoId, UUID userId) throws NotFoundException {
+	public Dispositivo assignDispositivoToUser(UUID dispositivoId, UUID userId) throws NotFoundException {
 		Dispositivo dispositivo = dispositiviRepo.findById(dispositivoId).orElseThrow(() -> new NotFoundException());
 		User user = usersRepo.findById(userId).orElseThrow(() -> new NotFoundException());
 
